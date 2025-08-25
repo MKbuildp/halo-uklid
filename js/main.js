@@ -349,6 +349,9 @@ async function uploadImageToImgBB(file, index) {
         // Přidat link do formuláře
         addImageLinkToForm(imageUrl);
         
+        // Zobrazit notifikaci s linkem
+        showNotification(`Obrázek ${file.name} byl úspěšně nahrán!`, 'success');
+        
     } catch (error) {
         console.error('Chyba při nahrávání obrázku:', error);
         updateImageUploadStatus(index, 'error');
@@ -373,11 +376,20 @@ function updateImageUploadStatus(index, status, imageUrl = '') {
 // Přidat link obrázku do formuláře
 function addImageLinkToForm(imageUrl) {
     const imageLinksField = document.getElementById('image_links');
-    if (imageLinksField) {
+    const nahraneObrazkyField = document.getElementById('nahrane_obrazky');
+    
+    if (imageLinksField && nahraneObrazkyField) {
         const currentLinks = imageLinksField.value ? imageLinksField.value.split(',') : [];
         if (!currentLinks.includes(imageUrl)) {
             currentLinks.push(imageUrl);
             imageLinksField.value = currentLinks.join(',');
+            
+            // Aktualizovat textové pole pro Formspree
+            if (currentLinks.length === 1) {
+                nahraneObrazkyField.value = `Nahrané obrázky: ${imageUrl}`;
+            } else {
+                nahraneObrazkyField.value = `Nahrané obrázky: ${currentLinks.join(', ')}`;
+            }
         }
     }
 }
