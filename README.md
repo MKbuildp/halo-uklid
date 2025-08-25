@@ -63,6 +63,12 @@ halouklid/
    - Povolte GitHub Pages v nastavení
    - Nastavte custom domain `halouklid.cz`
 
+3. **Formspree konfigurace**
+   - Rezervační formulář je propojen s Formspree
+   - Objednávky chodí na: kabelac.mi@gmail.com
+   - Endpoint: https://formspree.io/f/xqkqkqkq
+   - **DŮLEŽITÉ**: Nahraďte `xqkqkqkq` skutečným ID z vašeho Formspree účtu
+
 ## 📋 Seznam služeb
 
 - **Čištění sedaček** - od 500 Kč

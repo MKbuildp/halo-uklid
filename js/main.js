@@ -124,8 +124,23 @@ async function handleBookingSubmit(event) {
         
         // Validace dat byla odstraněna, spoléháme na HTML5 `required` atribut
         
-        // Simulace odeslání (nahraďte skutečným API voláním)
-        await simulateApiCall(bookingData);
+        // Odeslání přes Formspree
+        const formData = new FormData(form);
+        formData.append('_subject', 'Nová rezervace - Halo Úklid');
+        formData.append('_replyto', formData.get('email'));
+        
+        // Odeslání formuláře
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error('Chyba při odesílání formuláře');
+        }
         
         // Úspěch
         showNotification('Rezervace byla úspěšně odeslána! Budeme vás kontaktovat.', 'success');

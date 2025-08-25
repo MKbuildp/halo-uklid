@@ -209,7 +209,7 @@
                 <h2 class="section-title">Nezávazná poptávka</h2>
                 <div class="booking-container">
                     <div class="booking-form">
-                        <form id="bookingForm" class="form">
+                        <form id="bookingForm" class="form" action="https://formspree.io/f/xqkqkqkq" method="POST">
                             <div class="form-group">
                                 <label>Vyberte si služby *</label>
                                 <div class="checkbox-group" id="services-group">
@@ -266,6 +266,11 @@
                                 <label for="date">Preferovaný termín</label>
                                 <input type="date" id="date" name="date">
                             </div>
+                            
+                            <!-- Skrytá pole pro Formspree -->
+                            <input type="hidden" name="_subject" value="Nová rezervace - Halo Úklid">
+                            <input type="hidden" name="_next" value="https://mkbuildp.github.io/halo-uklid/#rezervace">
+                            <input type="hidden" name="_captcha" value="false">
                             
                             <div class="form-group">
                                 <label class="checkbox-item">
