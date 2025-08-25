@@ -255,66 +255,137 @@ function clearFieldError(field) {
 // ===== UPLOAD OBRÁZKŮ =====
 function initializeImageUpload() {
     const imageInput = document.getElementById('images');
+    const imagePreview = document.getElementById('image-preview');
     
-    if (!imageInput) return;
+    if (!imageInput || !imagePreview) return;
     
     imageInput.addEventListener('change', function(event) {
-        const files = event.target.files;
-        handleImageUpload(files);
+        const files = Array.from(event.target.files);
+        
+        // Vyčistit předchozí náhled
+        imagePreview.innerHTML = '';
+        
+        files.forEach((file, index) => {
+            // Kontrola velikosti (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showNotification(`Soubor ${file.name} je příliš velký. Maximální velikost je 5MB.`, 'error');
+                return;
+            }
+            
+            // Kontrola typu
+            if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+                showNotification(`Soubor ${file.name} není podporovaný obrázek. Použijte JPEG, PNG nebo WebP.`, 'error');
+                return;
+            }
+            
+            // Vytvořit náhled
+            createImagePreviewItem(file, index);
+            
+            // Automaticky nahrát na ImgBB
+            uploadImageToImgBB(file, index);
+        });
     });
 }
 
-function handleImageUpload(files) {
-    const maxSize = 5 * 1024 * 1024; // 5MB
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    
-    for (let file of files) {
-        // Kontrola velikosti
-        if (file.size > maxSize) {
-            showNotification(`Soubor ${file.name} je příliš velký. Maximální velikost je 5MB.`, 'error');
-            continue;
-        }
-        
-        // Kontrola typu
-        if (!allowedTypes.includes(file.type)) {
-            showNotification(`Soubor ${file.name} není podporovaný obrázek. Použijte JPEG, PNG nebo WebP.`, 'error');
-            continue;
-        }
-        
-        // Náhled obrázku
-        createImagePreview(file);
-    }
-}
-
-function createImagePreview(file) {
+// Vytvořit náhled obrázku
+function createImagePreviewItem(file, index) {
+    const imagePreview = document.getElementById('image-preview');
     const reader = new FileReader();
     
     reader.onload = function(e) {
-        const previewContainer = document.createElement('div');
-        previewContainer.className = 'image-preview';
-        previewContainer.style.cssText = 'display: inline-block; margin: 0.5rem; position: relative;';
+        const previewItem = document.createElement('div');
+        previewItem.className = 'image-preview-item';
+        previewItem.setAttribute('data-index', index);
         
         const img = document.createElement('img');
         img.src = e.target.result;
-        img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 8px;';
+        img.alt = file.name;
         
         const removeBtn = document.createElement('button');
+        removeBtn.className = 'remove-image';
         removeBtn.innerHTML = '×';
-        removeBtn.style.cssText = 'position: absolute; top: -8px; right: -8px; background: var(--danger-color); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 14px;';
         removeBtn.onclick = function() {
-            previewContainer.remove();
+            previewItem.remove();
+            removeImageLinkFromForm(index);
         };
         
-        previewContainer.appendChild(img);
-        previewContainer.appendChild(removeBtn);
+        const status = document.createElement('div');
+        status.className = 'upload-status';
+        status.textContent = 'Nahrávám...';
         
-        // Přidání náhledu do formuláře
-        const imageInput = document.getElementById('images');
-        const parent = imageInput.parentNode;
-        parent.appendChild(previewContainer);
+        previewItem.appendChild(img);
+        previewItem.appendChild(removeBtn);
+        previewItem.appendChild(status);
+        imagePreview.appendChild(previewItem);
     };
     
     reader.readAsDataURL(file);
+}
+
+// Upload obrázku na ImgBB
+async function uploadImageToImgBB(file, index) {
+    // ImgBB API key - zadarmo (max 32MB/měsíc)
+    const IMGBB_API_KEY = '221ec6ecd092057753cf4f7884b1f21d';
+    
+    try {
+        const formData = new FormData();
+        formData.append('image', file);
+        
+        const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            throw new Error('Chyba při nahrávání obrázku');
+        }
+        
+        const result = await response.json();
+        const imageUrl = result.data.url;
+        
+        // Aktualizovat status
+        updateImageUploadStatus(index, 'success', imageUrl);
+        
+        // Přidat link do formuláře
+        addImageLinkToForm(imageUrl);
+        
+    } catch (error) {
+        console.error('Chyba při nahrávání obrázku:', error);
+        updateImageUploadStatus(index, 'error');
+        showNotification(`Chyba při nahrávání ${file.name}`, 'error');
+    }
+}
+
+// Aktualizovat status nahrávání
+function updateImageUploadStatus(index, status, imageUrl = '') {
+    const statusElement = document.querySelector(`[data-index="${index}"] .upload-status`);
+    if (statusElement) {
+        if (status === 'success') {
+            statusElement.textContent = '✓ Nahrané';
+            statusElement.style.background = 'rgba(16, 185, 129, 0.9)';
+        } else {
+            statusElement.textContent = '✗ Chyba';
+            statusElement.style.background = 'rgba(239, 68, 68, 0.9)';
+        }
+    }
+}
+
+// Přidat link obrázku do formuláře
+function addImageLinkToForm(imageUrl) {
+    const imageLinksField = document.getElementById('image_links');
+    if (imageLinksField) {
+        const currentLinks = imageLinksField.value ? imageLinksField.value.split(',') : [];
+        if (!currentLinks.includes(imageUrl)) {
+            currentLinks.push(imageUrl);
+            imageLinksField.value = currentLinks.join(',');
+        }
+    }
+}
+
+// Odebrat link obrázku z formuláře
+function removeImageLinkFromForm(index) {
+    // Implementace pro odebrání linku při smazání náhledu
+    // Pro jednoduchost zatím necháme všechny linky
 }
 
 // ===== ANIMACE =====

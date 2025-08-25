@@ -69,6 +69,12 @@ halouklid/
    - Endpoint: https://formspree.io/f/xwpnkedp
    - ✅ **KONFIGURACE DOKONČENA** - formulář je funkční
 
+4. **ImgBB konfigurace (upload obrázků)**
+   - Obrázky se automaticky nahrávají na ImgBB
+   - **DŮLEŽITÉ**: Nahraďte placeholder API klíč v `js/main.js`
+   - Hledejte: `IMGBB_API_KEY = '2c0d0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c'`
+   - Nahraďte: `IMGBB_API_KEY = 'VAŠE_SKUTEČNÉ_API_KLÍČ'`
+
 ## 📋 Seznam služeb
 
 - **Čištění sedaček** - od 500 Kč
