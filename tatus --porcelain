@@ -1,0 +1,29 @@
+warning: in the working copy of 'index.html', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/README.md b/README.md[m
+[1mindex 0569922..b7ad7fa 100644[m
+[1m--- a/README.md[m
+[1m+++ b/README.md[m
+[36m@@ -66,8 +66,8 @@[m [mhalouklid/[m
+ 3. **Formspree konfigurace**[m
+    - Rezervační formulář je propojen s Formspree[m
+    - Objednávky chodí na: kabelac.mi@gmail.com[m
+[31m-   - Endpoint: https://formspree.io/f/xqkqkqkq[m
+[31m-   - **DŮLEŽITÉ**: Nahraďte `xqkqkqkq` skutečným ID z vašeho Formspree účtu[m
+[32m+[m[32m   - Endpoint: https://formspree.io/f/xwpnkedp[m
+[32m+[m[32m   - ✅ **KONFIGURACE DOKONČENA** - formulář je funkční[m
+ [m
+ ## 📋 Seznam služeb[m
+ [m
+[1mdiff --git a/index.html b/index.html[m
+[1mindex a8914c6..4519b37 100644[m
+[1m--- a/index.html[m
+[1m+++ b/index.html[m
+[36m@@ -209,7 +209,7 @@[m
+                 <h2 class="section-title">Nezávazná poptávka</h2>[m
+                 <div class="booking-container">[m
+                     <div class="booking-form">[m
+[31m-                        <form id="bookingForm" class="form" action="https://formspree.io/f/xqkqkqkq" method="POST">[m
+[32m+[m[32m                        <form id="bookingForm" class="form" action="https://formspree.io/f/xwpnkedp" method="POST">[m
+                             <div class="form-group">[m
+                                 <label>Vyberte si služby *</label>[m
+                                 <div class="checkbox-group" id="services-group">[m

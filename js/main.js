@@ -99,61 +99,32 @@ function initializeFormHandling() {
 
 // ===== REZERVAČNÍ FORMULÁŘ =====
 async function handleBookingSubmit(event) {
-    event.preventDefault();
+    // NEODSTRAŇUJEME preventDefault() - necháme Formspree fungovat přirozeně
     
     const form = event.target;
     const submitButton = form.querySelector('button[type="submit"]');
-    const originalText = submitButton.textContent;
     
-    try {
-        // Nastavení loading stavu
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<span class="spinner"></span> Odesílám...';
-        form.classList.add('loading');
-        
-        // Získání dat z formuláře
-        const formData = new FormData(form);
-        const bookingData = {
-            services: formData.getAll('services'),
-            address: formData.get('address'),
-            email: formData.get('email'),
-            phone: formData.get('phone'),
-            date: formData.get('date'),
-            images: formData.getAll('images')
-        };
-        
-        // Validace dat byla odstraněna, spoléháme na HTML5 `required` atribut
-        
-        // Odeslání přes Formspree
-        const formData = new FormData(form);
-        formData.append('_subject', 'Nová rezervace - Halo Úklid');
-        formData.append('_replyto', formData.get('email'));
-        
-        // Odeslání formuláře
-        const response = await fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-        
-        if (!response.ok) {
-            throw new Error('Chyba při odesílání formuláře');
-        }
-        
-        // Úspěch
-        showNotification('Rezervace byla úspěšně odeslána! Budeme vás kontaktovat.', 'success');
-        form.reset();
-        
-    } catch (error) {
-        console.error('Chyba při odesílání rezervace:', error);
-        showNotification(error.message || 'Došlo k chybě při odesílání rezervace.', 'error');
-    } finally {
-        // Obnovení původního stavu
+    // Nastavení loading stavu
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<span class="spinner"></span> Odesílám...';
+    form.classList.add('loading');
+    
+    // Necháme Formspree odeslat formulář přirozeně
+    // Po odeslání se stránka přesměruje podle _next parametru
+    // nebo zobrazí Formspree potvrzení
+    
+    // Po 3 sekundách obnovíme tlačítko (pro případ, že by se něco pokazilo)
+    setTimeout(() => {
         submitButton.disabled = false;
-        submitButton.textContent = originalText;
+        submitButton.textContent = 'Odeslat poptávku';
         form.classList.remove('loading');
+    }, 3000);
+    
+    // Nastavíme _replyto na email zákazníka
+    const emailField = form.querySelector('input[name="email"]');
+    const replytoField = form.querySelector('input[name="_replyto"]');
+    if (emailField && replytoField) {
+        replytoField.value = emailField.value;
     }
 }
 
