@@ -327,21 +327,30 @@ async function uploadImageToImgBB(file, index) {
     // ImgBB API key - zadarmo (max 32MB/měsíc)
     const IMGBB_API_KEY = '221ec6ecd092057753cf4f7884b1f21d';
     
+    console.log(`🚀 Začínám nahrávat obrázek: ${file.name} (${file.size} bytes)`);
+    
     try {
         const formData = new FormData();
         formData.append('image', file);
+        
+        console.log(`📤 Odesílám na ImgBB API...`);
         
         const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
             method: 'POST',
             body: formData
         });
         
+        console.log(`📥 ImgBB odpověď:`, response.status, response.statusText);
+        
         if (!response.ok) {
-            throw new Error('Chyba při nahrávání obrázku');
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
         
         const result = await response.json();
+        console.log(`✅ ImgBB výsledek:`, result);
+        
         const imageUrl = result.data.url;
+        console.log(`🔗 Obrázek URL: ${imageUrl}`);
         
         // Aktualizovat status
         updateImageUploadStatus(index, 'success', imageUrl);
@@ -353,9 +362,9 @@ async function uploadImageToImgBB(file, index) {
         showNotification(`Obrázek ${file.name} byl úspěšně nahrán!`, 'success');
         
     } catch (error) {
-        console.error('Chyba při nahrávání obrázku:', error);
+        console.error(`❌ Chyba při nahrávání obrázku ${file.name}:`, error);
         updateImageUploadStatus(index, 'error');
-        showNotification(`Chyba při nahrávání ${file.name}`, 'error');
+        showNotification(`Chyba při nahrávání ${file.name}: ${error.message}`, 'error');
     }
 }
 
@@ -375,11 +384,18 @@ function updateImageUploadStatus(index, status, imageUrl = '') {
 
 // Přidat link obrázku do formuláře
 function addImageLinkToForm(imageUrl) {
+    console.log(`🔗 Přidávám link do formuláře: ${imageUrl}`);
+    
     const imageLinksField = document.getElementById('image_links');
     const nahraneObrazkyField = document.getElementById('nahrane_obrazky');
     
+    console.log(`📝 Pole image_links:`, imageLinksField);
+    console.log(`📝 Pole nahrane_obrazky:`, nahraneObrazkyField);
+    
     if (imageLinksField && nahraneObrazkyField) {
         const currentLinks = imageLinksField.value ? imageLinksField.value.split(',') : [];
+        console.log(`📋 Současné linky:`, currentLinks);
+        
         if (!currentLinks.includes(imageUrl)) {
             currentLinks.push(imageUrl);
             imageLinksField.value = currentLinks.join(',');
@@ -390,7 +406,14 @@ function addImageLinkToForm(imageUrl) {
             } else {
                 nahraneObrazkyField.value = `Nahrané obrázky: ${currentLinks.join(', ')}`;
             }
+            
+            console.log(`✅ Link přidán! image_links:`, imageLinksField.value);
+            console.log(`✅ Link přidán! nahrane_obrazky:`, nahraneObrazkyField.value);
+        } else {
+            console.log(`⚠️ Link už existuje: ${imageUrl}`);
         }
+    } else {
+        console.error(`❌ Pole nenalezena! image_links:`, imageLinksField, `nahrane_obrazky:`, nahraneObrazkyField);
     }
 }
 
