@@ -5,6 +5,7 @@
 
 // ===== DOM LOADED =====
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 DOM načten, spouštím aplikaci...');
     initializeApp();
 });
 
@@ -254,18 +255,32 @@ function clearFieldError(field) {
 
 // ===== UPLOAD OBRÁZKŮ =====
 function initializeImageUpload() {
+    console.log('📸 Inicializuji upload obrázků...');
+    
     const imageInput = document.getElementById('images');
     const imagePreview = document.getElementById('image-preview');
     
-    if (!imageInput || !imagePreview) return;
+    console.log('🔍 Hledám pole pro obrázky:', imageInput);
+    console.log('🔍 Hledám náhled obrázků:', imagePreview);
+    
+    if (!imageInput || !imagePreview) {
+        console.error('❌ Pole pro obrázky nenalezena!');
+        return;
+    }
+    
+    console.log('✅ Pole pro obrázky nalezena, přidávám event listener...');
     
     imageInput.addEventListener('change', function(event) {
+        console.log('📁 Soubory vybrány:', event.target.files);
+        
         const files = Array.from(event.target.files);
         
         // Vyčistit předchozí náhled
         imagePreview.innerHTML = '';
         
         files.forEach((file, index) => {
+            console.log(`📄 Zpracovávám soubor ${index}:`, file.name, file.type, file.size);
+            
             // Kontrola velikosti (max 5MB)
             if (file.size > 5 * 1024 * 1024) {
                 showNotification(`Soubor ${file.name} je příliš velký. Maximální velikost je 5MB.`, 'error');
@@ -278,13 +293,19 @@ function initializeImageUpload() {
                 return;
             }
             
+            console.log(`✅ Soubor ${file.name} je validní, vytvářím náhled...`);
+            
             // Vytvořit náhled
             createImagePreviewItem(file, index);
+            
+            console.log(`🚀 Spouštím upload na ImgBB pro ${file.name}...`);
             
             // Automaticky nahrát na ImgBB
             uploadImageToImgBB(file, index);
         });
     });
+    
+    console.log('✅ Event listener pro upload obrázků přidán!');
 }
 
 // Vytvořit náhled obrázku
