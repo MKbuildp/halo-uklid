@@ -66,8 +66,8 @@ halouklid/
 3. **Formspree konfigurace**
    - Rezervační formulář je propojen s Formspree
    - Objednávky chodí na: kabelac.mi@gmail.com
-   - Endpoint: https://formspree.io/f/xqkqkqkq
-   - **DŮLEŽITÉ**: Nahraďte `xqkqkqkq` skutečným ID z vašeho Formspree účtu
+   - Endpoint: https://formspree.io/f/xwpnkedp
+   - ✅ **KONFIGURACE DOKONČENA** - formulář je funkční
 
 ## 📋 Seznam služeb
 
