@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://halouklid.cz/sitemap.xml
+
+# Disallow admin areas (if any)
+Disallow: /admin/
+Disallow: /private/
+
+# Allow important pages
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Crawl delay
+Crawl-delay: 1
+
+
+
+
