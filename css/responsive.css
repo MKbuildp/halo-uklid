@@ -1,15 +1,16 @@
-/* ===== RESPONZIVNÍ DESIGN - MOBILNÍ OPTIMALIZACE ===== */
+/* ===== MODERNÍ RESPONZIVNÍ DESIGN ===== */
 
 /* ===== MOBILNÍ ZAŘÍZENÍ (do 768px) ===== */
 @media screen and (max-width: 768px) {
     /* Typografie pro mobilní zařízení */
-    h1 { font-size: 2rem; }
-    h2 { font-size: 1.75rem; }
-    h3 { font-size: 1.25rem; }
+    h1 { font-size: 2.25rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+    h4 { font-size: 1.25rem; }
     
-    /* Kontejnery */
+    /* Kontejnery s lepším spacing */
     .container {
-        padding: 0 1rem;
+        padding: 0 1.5rem;
         margin: 0 auto;
         text-align: center;
     }
@@ -21,23 +22,27 @@
     
     .nav-container {
         margin: 0 auto;
+        padding: 0 1.5rem;
     }
     
-    /* Navigace - mobilní menu */
+    /* Modernější navigace - mobilní menu */
     .nav-menu {
         position: fixed;
-        top: 70px;
+        top: 80px;
         left: -100%;
         width: 100%;
-        height: calc(100vh - 70px);
-        background-color: var(--white);
+        height: calc(100vh - 80px);
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        padding-top: 2rem;
+        padding-top: 3rem;
         transition: var(--transition);
-        box-shadow: var(--shadow-lg);
-        gap: 1.5rem;
+        box-shadow: var(--shadow-xl);
+        gap: 2rem;
+        z-index: 999;
     }
     
     .nav-menu.active {
@@ -45,25 +50,43 @@
     }
     
     .nav-link {
-        font-size: 1.25rem;
-        padding: 1rem;
-        width: 100%;
+        font-size: 1.5rem;
+        padding: 1.5rem 2rem;
+        width: 90%;
         text-align: center;
-        border-bottom: 1px solid var(--medium-gray);
+        border-radius: var(--border-radius);
+        transition: var(--transition);
+        background: transparent;
+        margin-bottom: 0.5rem;
+        border: none;
+    }
+    
+    .nav-link:hover {
+        background: var(--primary-color);
+        color: var(--bg-white);
+        transform: scale(1.05);
     }
     
     .nav-toggle {
         display: flex;
+        padding: 0.75rem;
+        border-radius: var(--border-radius);
+        transition: var(--transition);
+    }
+    
+    .nav-toggle:hover {
+        background: rgba(0, 123, 255, 0.1);
     }
     
     .logo-image {
-        width: 120px; /* Větší logo na mobilu */
-        height: 50px;
+        width: 140px;
+        height: auto;
     }
     
     /* Hamburger menu animace */
     .nav-toggle.active .bar:nth-child(1) {
         transform: rotate(-45deg) translate(-5px, 6px);
+        background-color: var(--primary-color);
     }
     
     .nav-toggle.active .bar:nth-child(2) {
@@ -72,61 +95,138 @@
     
     .nav-toggle.active .bar:nth-child(3) {
         transform: rotate(45deg) translate(-5px, -6px);
+        background-color: var(--primary-color);
     }
     
-    /* Hero sekce */
+    /* Hero sekce - modernější */
     .hero {
-        padding: 6rem 0 3rem;
-        min-height: 80vh;
+        padding: 8rem 0 4rem;
+        min-height: 90vh;
     }
     
     .hero-container {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 3rem;
+        text-align: center;
+    }
+    
+    .hero-content {
         text-align: center;
     }
     
     .hero-title {
-        font-size: 2.25rem;
+        font-size: 2.5rem;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
     }
     
     .hero-subtitle {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
+        margin-bottom: 2.5rem;
+        max-width: none;
     }
     
     .hero-buttons {
         justify-content: center;
         flex-direction: column;
         align-items: center;
+        gap: 1rem;
     }
     
     .hero-logo-image {
-        max-width: 280px; /* Větší logo na mobilu */
-        width: 80%;
+        max-width: 320px;
+        width: 85%;
         height: auto;
     }
     
-    /* Služby */
+    /* Služby - modernější karty */
     .services-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 2rem;
     }
     
     .service-card {
-        padding: 1.5rem;
+        padding: 2.5rem 2rem;
+        margin: 0 0.5rem;
+    }
+    
+    .service-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 2.25rem;
+        margin-bottom: 1.5rem;
     }
 
     /* Detail služeb - mobilní zobrazení */
-    .service-detail-item,
-    .service-detail-item:nth-child(even) {
+    .services-detail .service-detail-item,
+    .services-detail .service-detail-item:nth-child(even) {
         flex-direction: column;
-        gap: 1.5rem;
-        padding: 1.5rem;
+        gap: 2rem;
+        padding: 2.5rem 2rem;
         text-align: center;
+        border-left: none;
+        border-right: none;
+        border-top: 4px solid var(--primary-color);
+    }
+
+    .services-detail .service-detail-item:nth-child(even) {
+        border-top: 4px solid var(--secondary-color);
+    }
+
+    .services-detail .service-detail-item:hover,
+    .services-detail .service-detail-item:nth-child(even):hover {
+        transform: none;
+    }
+    
+    /* Menší posun pro mobilní animace */
+    .services-detail .service-detail-item {
+        transform: translateX(-30px);
+    }
+
+    .services-detail .service-detail-item:nth-child(even) {
+        transform: translateX(30px);
+    }
+    
+    @keyframes slideInLeftMobile {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideInRightMobile {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    .services-detail .service-detail-item.slide-in-left {
+        animation: slideInLeftMobile 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .services-detail .service-detail-item.slide-in-right {
+        animation: slideInRightMobile 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .service-detail-icon {
+        flex: none;
+    }
+
+    .service-detail-icon i {
+        font-size: 3.5rem;
     }
 
     .service-detail-text {
-        text-align: left;
+        text-align: center;
     }
     
     /* Rezervace */
@@ -136,147 +236,321 @@
     }
     
     .booking-form {
-        padding: 1.5rem;
-    }
-    
-    .booking-info {
-        padding: 1.5rem;
-    }
-    
-    /* Galerie */
-    .gallery-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+        padding: 2.5rem 2rem;
+        margin: 0 0.5rem;
     }
     
     /* Kontakt */
-    .contact-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+    .contact-details {
+        padding: 2.5rem 2rem;
+        margin: 0 0.5rem;
+        gap: 1.5rem;
     }
     
-    .contact-form {
-        padding: 1.5rem;
+    .contact-item {
+        padding: 2rem 1.5rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .contact-item i {
+        font-size: 2rem;
+        padding: 1.25rem;
+    }
+    
+    /* Ceník */
+    .pricelist-table {
+        margin: 0 0.5rem 3rem 0.5rem;
+    }
+    
+    .pricelist-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        padding: 2rem;
+    }
+    
+    .pricelist-item .service-name {
+        font-size: 1.1rem;
+    }
+    
+    .pricelist-item .service-price {
+        font-size: 1.4rem;
+    }
+    
+    .pricelist-note {
+        margin: 0 1rem;
+        padding: 1rem 0;
     }
     
     /* Footer */
     .footer-content {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 2.5rem;
         text-align: center;
     }
     
     /* Sekce padding */
     section {
-        padding: 3rem 0;
+        padding: 4rem 0;
+    }
+    
+    .section-title {
+        font-size: 2.25rem;
+        margin-bottom: 3rem;
     }
     
     /* Tlačítka */
     .btn {
-        padding: 0.875rem 1.25rem;
+        padding: 1rem 2rem;
         font-size: 1rem;
+        min-height: 50px;
+    }
+    
+    /* Scroll to top button - mobilní */
+    .scroll-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 55px;
+        height: 55px;
+        font-size: 1.5rem;
+    }
+    
+    /* Kärcher sekce - mobilní optimalizace */
+    .karcher-section {
+        padding: 4rem 0;
+    }
+    
+    .karcher-intro p {
+        font-size: 1.2rem;
+        padding: 0 1rem;
+    }
+    
+    .karcher-benefits h3 {
+        font-size: 2rem;
+        padding: 0 1rem;
+        margin-bottom: 2.5rem;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0 0.5rem;
+    }
+    
+    .benefit-item {
+        padding: 2.5rem 2rem;
+    }
+    
+    .benefit-icon {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .benefit-icon i {
+        font-size: 2.25rem;
+    }
+    
+    .benefit-item h4 {
+        font-size: 1.3rem;
+    }
+    
+    .benefit-item p {
+        font-size: 1rem;
+    }
+    
+    .highlight-text {
+        font-size: 1.2rem;
+        padding: 2rem 1.5rem;
+        margin: 0 1rem;
+        max-width: calc(100% - 2rem);
     }
 }
 
 /* ===== TABLET ZAŘÍZENÍ (768px - 1024px) ===== */
 @media screen and (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        padding: 0 2rem;
+    }
+    
     .hero-container {
-        gap: 2rem;
+        gap: 3rem;
     }
     
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 3rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.25rem;
     }
     
     .services-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-    }
-    
-    .booking-container {
         gap: 2rem;
     }
     
-    .gallery-grid {
+    .benefits-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
     }
     
-    .contact-container {
+    .contact-details {
+        grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
+    }
+    
+    .pricelist-item {
+        padding: 1.75rem 2rem;
     }
 }
 
 /* ===== VELKÉ OBRAZOVKY (nad 1024px) ===== */
 @media screen and (min-width: 1025px) {
     .hero-container {
-        gap: 4rem;
+        gap: 5rem;
     }
     
     .hero-title {
-        font-size: 3.5rem;
+        font-size: 4rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.4rem;
     }
     
     .services-grid {
         grid-template-columns: repeat(4, 1fr);
+        gap: 2.5rem;
     }
     
-    .gallery-grid {
-        grid-template-columns: repeat(4, 1fr);
+    .benefits-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+    }
+    
+    .section-title {
+        font-size: 3rem;
+    }
+}
+
+/* ===== EXTRA VELKÉ OBRAZOVKY (nad 1400px) ===== */
+@media screen and (min-width: 1400px) {
+    .container {
+        max-width: 1400px;
+        padding: 0 3rem;
+    }
+    
+    .hero-title {
+        font-size: 4.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 3.5rem;
     }
 }
 
 /* ===== LANDSCAPE MOBILNÍ (orientace na šířku) ===== */
 @media screen and (max-width: 768px) and (orientation: landscape) {
     .hero {
-        min-height: 60vh;
-        padding: 5rem 0 2rem;
+        min-height: 70vh;
+        padding: 6rem 0 3rem;
     }
     
     .nav-menu {
         height: calc(100vh - 70px);
         overflow-y: auto;
+        padding-top: 2rem;
+    }
+    
+    .nav-link {
+        padding: 1rem 2rem;
+        font-size: 1.25rem;
     }
 }
 
-/* ===== VYSOKÉ MOBILNÍ ZAŘÍZENÍ (iPhone SE, atd.) ===== */
+/* ===== MALÉ MOBILNÍ ZAŘÍZENÍ (do 375px) ===== */
 @media screen and (max-width: 375px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .nav-container {
+        padding: 0 1rem;
+    }
+    
     .hero-title {
-        font-size: 1.75rem;
+        font-size: 2rem;
+        line-height: 1.3;
     }
     
     .hero-subtitle {
-        font-size: 1rem;
-    }
-    
-    .hero-logo {
-        width: 200px;
-        height: 200px;
+        font-size: 1.1rem;
     }
     
     .hero-logo-image {
-        width: 80px;
-        height: 80px;
+        max-width: 280px;
+        width: 90%;
     }
     
     .logo-image {
-        width: 100px; /* Upravená velikost pro nejmenší obrazovky */
-        height: 45px;
+        width: 120px;
     }
     
-    .container {
-        padding: 0 0.75rem;
-        margin: 0 auto;
-        text-align: center;
+    .service-card {
+        padding: 2rem 1.5rem;
+        margin: 0 0.25rem;
     }
     
-    .hero-container {
-        text-align: center;
-        margin: 0 auto;
+    .service-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+    
+    .booking-form {
+        padding: 2rem 1.5rem;
+        margin: 0 0.25rem;
+    }
+    
+    .contact-details {
+        padding: 2rem 1.5rem;
+        margin: 0 0.25rem;
     }
     
     .btn {
-        padding: 0.75rem 1rem;
-        font-size: 0.9rem;
+        padding: 0.875rem 1.5rem;
+        font-size: 0.95rem;
+        min-height: 48px;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .scroll-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+    
+    .benefit-item {
+        padding: 2rem 1.5rem;
+    }
+    
+    .highlight-text {
+        font-size: 1.1rem;
+        padding: 1.75rem 1.25rem;
+        margin: 0 0.5rem;
+        max-width: calc(100% - 1rem);
     }
 }
 
@@ -290,27 +564,34 @@
     .checkbox-item,
     input[type="checkbox"],
     input[type="radio"] {
-        min-height: 44px;
-        min-width: 44px;
+        min-height: 48px;
+        min-width: 48px;
     }
     
     /* Větší mezery mezi tlačítky */
     .hero-buttons {
-        gap: 1rem;
+        gap: 1.5rem;
     }
     
     /* Větší padding pro formulářové prvky */
     .form-group input,
     .form-group textarea,
     .form-group select {
-        padding: 1rem;
+        padding: 1.25rem 1.5rem;
         font-size: 16px; /* Zabrání zoomu na iOS */
+        border-radius: var(--border-radius);
     }
     
     /* Větší checkboxy */
     .checkbox-item input[type="checkbox"] {
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
+    }
+    
+    .checkbox-item {
+        padding: 1rem;
+        min-height: 48px;
+        align-items: center;
     }
 }
 
@@ -324,34 +605,54 @@
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
     
-    .hero-placeholder {
+    .service-card:hover {
+        transform: none;
+    }
+    
+    .btn:hover {
+        transform: none;
+    }
+    
+    .services-detail .service-detail-item {
+        opacity: 1;
+        transform: translateX(0);
         animation: none;
+    }
+    
+    .services-detail .service-detail-item:nth-child(even) {
+        transform: translateX(0);
     }
 }
 
 /* ===== DARK MODE SUPPORT ===== */
 @media (prefers-color-scheme: dark) {
     :root {
-        --light-gray: #1f2937;
-        --medium-gray: #374151;
-        --dark-gray: #f9fafb;
-        --white: #111827;
-        --secondary-color: #d1d5db;
+        --bg-light: #1f2937;
+        --bg-lighter: #374151;
+        --text-primary: #f9fafb;
+        --text-secondary: #d1d5db;
+        --bg-white: #111827;
     }
     
     body {
-        background-color: var(--white);
-        color: var(--dark-gray);
+        background-color: var(--bg-white);
+        color: var(--text-primary);
+    }
+    
+    .header {
+        background: rgba(17, 24, 39, 0.95);
     }
     
     .service-card,
     .booking-form,
-    .contact-form,
-    .gallery-item {
-        background-color: var(--light-gray);
-        border-color: var(--medium-gray);
+    .contact-details,
+    .benefit-item,
+    .pricelist-table {
+        background-color: var(--bg-light);
+        border-color: var(--bg-lighter);
     }
 
     .service-card h3,
@@ -359,15 +660,44 @@
     .hero-title,
     .hero-subtitle,
     .section-title {
-        color: #f9fafb; /* Světlý text pro tmavý režim */
+        color: var(--text-primary);
+    }
+    
+    .nav-menu {
+        background: rgba(17, 24, 39, 0.98);
+    }
+    
+    .nav-link {
+        background: transparent;
+        border: none;
+    }
+    
+    .footer {
+        background: rgba(17, 24, 39, 0.95);
+        border-top: 1px solid rgba(0, 123, 255, 0.2);
+    }
+    
+    .footer-section h4,
+    .footer-bottom {
+        color: var(--text-primary);
+    }
+    
+    .footer-section p,
+    .footer-section ul li a {
+        color: var(--text-secondary);
     }
 }
 
 /* ===== HIGH DPI DISPLAYS ===== */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .hero-placeholder {
-        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-        background-size: 200% 200%;
+    .hero::before {
+        background-size: 120px 120px;
+    }
+    
+    .logo-image,
+    .hero-logo-image {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
     }
 }
 
@@ -375,12 +705,13 @@
 @media print {
     .nav-toggle,
     .hero-buttons,
-    .btn {
+    .btn,
+    .scroll-to-top {
         display: none !important;
     }
     
     .hero {
-        padding: 1rem 0;
+        padding: 2rem 0;
         min-height: auto;
         background: none;
     }
@@ -388,18 +719,28 @@
     .hero-container {
         grid-template-columns: 1fr;
         text-align: left;
+        gap: 1rem;
     }
     
     .service-card,
     .booking-form,
-    .contact-form {
-        border: 1px solid #ccc;
+    .contact-details,
+    .benefit-item {
+        border: 1px solid #ddd;
         box-shadow: none;
         break-inside: avoid;
+        background: white;
     }
     
     .section-title::after {
         display: none;
+    }
+    
+    body {
+        font-size: 12pt;
+        line-height: 1.4;
+        color: #000;
+        background: #fff;
     }
 }
 
@@ -412,6 +753,12 @@
     select:focus {
         outline: 3px solid var(--primary-color);
         outline-offset: 2px;
+    }
+    
+    .nav-toggle:focus {
+        outline: 3px solid var(--primary-color);
+        outline-offset: 2px;
+        border-radius: var(--border-radius);
     }
 }
 
@@ -442,8 +789,20 @@
     }
     
     .container {
-        padding-left: max(1rem, env(safe-area-inset-left));
-        padding-right: max(1rem, env(safe-area-inset-right));
+        padding-left: max(2rem, env(safe-area-inset-left));
+        padding-right: max(2rem, env(safe-area-inset-right));
+    }
+    
+    .scroll-to-top {
+        right: max(1.5rem, env(safe-area-inset-right));
+        bottom: max(1.5rem, env(safe-area-inset-bottom));
+    }
+    
+    @media screen and (max-width: 768px) {
+        .container {
+            padding-left: max(1.5rem, env(safe-area-inset-left));
+            padding-right: max(1.5rem, env(safe-area-inset-right));
+        }
     }
 }
 
@@ -455,7 +814,50 @@
     }
     
     .nav-menu {
-        height: calc(100vh - 70px);
-        height: calc(100dvh - 70px);
+        height: calc(100vh - 80px);
+        height: calc(100dvh - 80px);
+    }
+}
+
+/* ===== HOVER EFEKTY POUZE PRO DESKTOP ===== */
+@media (hover: hover) and (pointer: fine) {
+    .service-card:hover {
+        transform: translateY(-8px);
+    }
+    
+    .benefit-item:hover {
+        transform: translateY(-8px);
+    }
+    
+    .contact-item:hover {
+        transform: translateY(-2px);
+    }
+    
+
+    
+    .btn:hover {
+        transform: translateY(-3px);
+    }
+    
+    .scroll-to-top:hover {
+        transform: translateY(-3px);
+    }
+}
+
+/* ===== ANIMACE PRO MOBILNÍ ===== */
+@media screen and (max-width: 768px) {
+    .fade-in-up {
+        animation: fadeInUpMobile 0.6s ease-out;
+    }
+    
+    @keyframes fadeInUpMobile {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 }

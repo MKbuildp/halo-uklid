@@ -12,6 +12,7 @@ Moderní, responzivní webová stránka pro úklidovou firmu s důrazem na mobil
 - **Galerie služeb** - Prezentace před/po úklidu
 - **SEO optimalizace** - Meta tagy, Open Graph, strukturovaná data
 - **Přístupnost** - ARIA labels, klávesové zkratky, focus management
+- **GDPR compliance** - Zásady zpracování osobních údajů
 
 ## 🛠️ Technologie
 
@@ -37,6 +38,7 @@ Moderní, responzivní webová stránka pro úklidovou firmu s důrazem na mobil
 ```
 halouklid/
 ├── index.html          # Hlavní HTML soubor
+├── gdpr.html           # GDPR zásady
 ├── css/
 │   ├── style.css       # Hlavní styly
 │   └── responsive.css  # Responzivní styly
@@ -77,7 +79,7 @@ halouklid/
 
 ## 📋 Seznam služeb
 
-- **Čištění sedaček** - od 500 Kč
+- **Tepování sedaček a čalounění** - od 500 Kč
 - **Čištění koberců** - od 300 Kč
 - **Úklid kanceláří** - od 800 Kč
 - **Úklid domácností** - od 600 Kč

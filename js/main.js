@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeApp() {
     initializeMobileMenu();
     initializeSmoothScrolling();
+    initializeScrollToTop();
     initializeFormHandling();
     initializeImageUpload();
     initializeAnimations();
@@ -82,6 +83,30 @@ function initializeSmoothScrolling() {
                     behavior: 'smooth'
                 });
             }
+        });
+    });
+}
+
+// ===== SCROLL TO TOP TLAČÍTKO =====
+function initializeScrollToTop() {
+    const scrollToTopButton = document.getElementById('scrollToTop');
+    
+    if (!scrollToTopButton) return;
+    
+    // Zobrazení/skrytí tlačítka při scrollování
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            scrollToTopButton.classList.add('visible');
+        } else {
+            scrollToTopButton.classList.remove('visible');
+        }
+    });
+    
+    // Kliknutí na tlačítko
+    scrollToTopButton.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
         });
     });
 }
@@ -448,7 +473,7 @@ function removeImageLinkFromForm(index) {
 function initializeAnimations() {
     // Intersection Observer pro animace při scrollování
     const observerOptions = {
-        threshold: 0.1,
+        threshold: 0.2,
         rootMargin: '0px 0px -50px 0px'
     };
     
@@ -460,9 +485,33 @@ function initializeAnimations() {
         });
     }, observerOptions);
     
+    // Intersection Observer pro detail služeb s postupným objevováním
+    const serviceDetailObserver = new IntersectionObserver(function(entries) {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Postupné zobrazování s mírným zpožděním
+                setTimeout(() => {
+                    const isEven = Array.from(entry.target.parentNode.children).indexOf(entry.target) % 2 === 1;
+                    if (isEven) {
+                        entry.target.classList.add('slide-in-right');
+                    } else {
+                        entry.target.classList.add('slide-in-left');
+                    }
+                }, index * 150); // Zpoždění 150ms mezi jednotlivými elementy
+            }
+        });
+    }, {
+        threshold: 0.3,
+        rootMargin: '0px 0px -100px 0px'
+    });
+    
     // Pozorování elementů pro animace
     const animatedElements = document.querySelectorAll('.service-card, .gallery-item, .contact-item');
     animatedElements.forEach(el => observer.observe(el));
+    
+    // Pozorování elementů detail služeb
+    const serviceDetailElements = document.querySelectorAll('.services-detail .service-detail-item');
+    serviceDetailElements.forEach(el => serviceDetailObserver.observe(el));
 }
 
 // ===== PŘÍSTUPNOST =====
